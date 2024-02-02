@@ -1,6 +1,8 @@
-# Installation
-To Install all modules:
- - In your terminal: type `cd react-med-dash`
- - Next, type  `npm i`, this should install any dependencies.
-<br>
-To run the dashboard, type `npm run dev`, then open a web browser and on the search bar, type `https://localhost:3000`
+# React + Vite
+
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+
+Currently, two official plugins are available:
+
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
