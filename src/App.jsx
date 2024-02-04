@@ -6,9 +6,16 @@ import DateRangePicker from '~/components/DatePicker'
 import Chart from '~/components/Chart'
 import SvgIcon from '~/components/SvgIcon'
 import './App.css'
+import DropDownMenu from './components/DropDownMenu'
+// import routing and page components
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import HealthAnalysisPage from './pages/HealthAnalysisPage';
+import DiaryEntriesPage from './pages/DiaryEntriesPage';
+import HealthHabitTrackerPage from './pages/HealthHabitTrackerPage';
+import ClinicianCommunicationPage from './pages/ClinicianCommunicationPage';
+import HomePage from './pages/HomePage'
 
 function App() {
-  const tabNames = ["Health Analysis","Diary Entries","Health Habit Tracker","Clinician Communication"]
   const DISABLED_RANGE = 31
   const defaultDateRange = [day().subtract(DISABLED_RANGE, 'days'), day()]
   const [currentDate, setCurrentDate] = useState(defaultDateRange)
@@ -46,26 +53,27 @@ function App() {
     },
     [data]
   )
-
-  const items = Array.from({ length: tabNames.length }) // the number of reports
-    .fill(0)
-    .map((_, idx) => ({
-      key: idx,
-      label: tabNames[idx]
-    }))
-
+ 
+  
+ 
+    
   return (
     <div className="mt-20 py-4 px-8">
       <section className="flex justify-between items-center">
-        <Dropdown menu={{ items }}>
-          <a
-            className="text-slate-600 flex items-center gap-4 text-xl"
-            onClick={(e) => e.preventDefault()}
-          >
-            <span>Reports</span>
-            <SvgIcon iconName="arrowdown" size={14} />
-          </a>
-        </Dropdown>
+        <Router>
+          <div>
+            <DropDownMenu />
+            <Routes>
+              <Route path ="/" element={<HomePage/>} />
+              <Route path="/healthAnalysis" element={<HealthAnalysisPage />} />
+              <Route path="/diary" element={<DiaryEntriesPage />} />
+              <Route path="/healthTracker" element={<HealthHabitTrackerPage />} />
+              <Route path="/clinicianComm" element={<ClinicianCommunicationPage />} />
+            </Routes>
+          </div>
+
+        </Router>
+    
 
         <div className="flex gap-4">
           <Button>
