@@ -5,6 +5,7 @@ import { Button, Dropdown } from 'antd'
 import DateRangePicker from '~/components/DatePicker'
 import Chart from '~/components/Chart'
 import SvgIcon from '~/components/SvgIcon'
+import HealthHabit from '~/components/HealthHabit'
 import './App.css'
 
 function App() {
