@@ -8,6 +8,7 @@ import SvgIcon from '~/components/SvgIcon'
 import './App.css'
 
 function App() {
+  const tabNames = ["Health Analysis","Diary Entries","Health Habit Tracker","Clinician Communication"]
   const DISABLED_RANGE = 31
   const defaultDateRange = [day().subtract(DISABLED_RANGE, 'days'), day()]
   const [currentDate, setCurrentDate] = useState(defaultDateRange)
@@ -46,11 +47,11 @@ function App() {
     [data]
   )
 
-  const items = Array.from({ length: 3 }) // the number of reports
+  const items = Array.from({ length: tabNames.length }) // the number of reports
     .fill(0)
     .map((_, idx) => ({
       key: idx,
-      label: `title${idx + 1}`
+      label: tabNames[idx]
     }))
 
   return (
