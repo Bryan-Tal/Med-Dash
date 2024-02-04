@@ -2,16 +2,32 @@ import { useState } from 'react';
 
 //Create an editable today's entry page
 export default function Entries() {
-  const [text, setText] = useState('');
+  const [weight, setWeight] = useState('');
+  const [water, setWater] = useState('');
+  const [sleep, setSleep] = useState('');
 
-  function handleChange(e) {
-    setText(e.target.value);
+  function changeWeight(e) {
+    setWeight(e.target.value);
+  }
+
+  function changeWater(e) {
+    setWater(e.target.value);
+  }
+
+  function changeSleep(e) {
+    setSleep(e.target.value);
   }
 
   return (
     <>
-      <input value={text} onChange={handleChange} />
-      <p>Weight: {text}</p>
+      <input value={weight} onChange={changeWeight} />
+      <p>Weight: {weight}</p>
+      
+      <input value={water} onChange={changeWater} />
+      <p>Water: {water}</p>
+
+      <input value={sleep} onChange={changeSleep} />
+      <p>Sleep: {sleep}</p>
     </>
   );
 }
