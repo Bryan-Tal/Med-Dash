@@ -4,6 +4,7 @@ import { day } from '~/utils/day'
 import { Button, Dropdown } from 'antd'
 import DateRangePicker from '~/components/DatePicker'
 import Chart from '~/components/Chart'
+import ShowData from './components/ShowData'
 import SvgIcon from '~/components/SvgIcon'
 import HealthHabit from '~/components/HealthHabit'
 import './App.css'
@@ -24,7 +25,7 @@ function App() {
     setCurrentDate(dateRange)
   })
 
-  // generate random data for testing
+  // generate random data for testing in cards
   const generateRandomDat = (function () {
     let uId = 0
     const colors = ['#5ec9db', '#f5b97a', '#f57a7a', '#d5d97a']
@@ -43,7 +44,7 @@ function App() {
     }
   })()
   const [data, setData] = useState(
-    Array.from({ length: 4 }) //set the # of cards
+    Array.from({ length: 4}) //set the # of cards
       .fill(0)
       .map(() => generateRandomDat())
   )
@@ -54,10 +55,7 @@ function App() {
     },
     [data]
   )
- 
-  
- 
-    
+       
   return (
     <div className="mt-20 py-4 px-8">
       <section className="flex justify-between items-center">
@@ -102,6 +100,10 @@ function App() {
 
       <section className="mt-4 p-4 bg-white rounded-lg">
         <Chart dateRange={getDays(currentDate[0], currentDate[1])} />
+      </section>
+
+      <section className="mt-4">
+        <ShowData data={data} onClose={handleCloseCard} />
       </section>
     </div>
   )
