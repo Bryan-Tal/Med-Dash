@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 //Create an editable today's entry page
-export default function Entries() {
+export default function HealthHabitEntries() {
   const [editingEntries, setEditingEntries] = useState(false);
   const [weight, setWeight] = useState('');
   const [water, setWater] = useState('');
@@ -41,3 +41,4 @@ export default function Entries() {
     </>
   );
 }
+

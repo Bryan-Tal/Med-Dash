@@ -6,16 +6,17 @@ import DateRangePicker from '~/components/DatePicker'
 import Chart from '~/components/Chart'
 import ShowData from './components/ShowData'
 import SvgIcon from '~/components/SvgIcon'
-import HealthHabit from '~/components/HealthHabit'
 import './App.css'
 import DropDownMenu from './components/DropDownMenu'
 // import routing and page components
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HealthAnalysisPage from './pages/HealthAnalysisPage';
 import DiaryEntriesPage from './pages/DiaryEntriesPage';
-import HealthHabitTrackerPage from './pages/HealthHabitTrackerPage';
 import ClinicianCommunicationPage from './pages/ClinicianCommunicationPage';
 import HomePage from './pages/HomePage'
+import HealthHabitEntries from './components/HealthHabit';
+import CSVFileSelector from './components/CSVFileSelector'
+
 
 function App() {
   const DISABLED_RANGE = 31
@@ -25,48 +26,26 @@ function App() {
     setCurrentDate(dateRange)
   })
 
-  // generate random data for testing in cards
-  const generateRandomDat = (function () {
-    let uId = 0
-    const colors = ['#5ec9db', '#f5b97a', '#f57a7a', '#d5d97a']
-    return () => {
-      uId++
-      return {
-        title: `title${uId}`,
-        id: uId,
-        color: colors[uId % 4],
-        list: new Array(3).fill(0).map((_, idx) => ({
-          title: `innerTitle${idx + 1}`,
-          desc: `innerDesc${idx + 1}`,
-          percent: Math.random().toFixed(2)
-        }))
-      }
-    }
-  })()
-  const [data, setData] = useState(
-    Array.from({ length: 4}) //set the # of cards
-      .fill(0)
-      .map(() => generateRandomDat())
-  )
-  // close the cards
-  const handleCloseCard = useCallback(
-    (id) => {
-      setData([...data.filter((item) => item.id !== id)])
-    },
-    [data]
-  )
-       
+
+
   return (
     <div className="mt-20 py-4 px-8">
       <section className="flex justify-between items-center">
+      {/* Extra Code */}
+      <div>
+      <h1>CSV File Selector</h1>
+      <CSVFileSelector/>
+      </div>
+      {/* Extra Code */}
         <Router>
           <div>
             <DropDownMenu />
             <Routes>
-              <Route path ="/" element={<HomePage/>} />
+              <Route exact path ="/" element={<HomePage/>} />
+              {/* <Route path="/landing" element={<LandingPage />} /> */}
               <Route path="/healthAnalysis" element={<HealthAnalysisPage />} />
               <Route path="/diary" element={<DiaryEntriesPage />} />
-              <Route path="/healthTracker" element={<HealthHabitTrackerPage />} />
+              <Route path="/healthTracker" element={<HealthHabitEntries />} />
               <Route path="/clinicianComm" element={<ClinicianCommunicationPage />} />
             </Routes>
           </div>
@@ -103,10 +82,10 @@ function App() {
       </section>
 
       <section className="mt-4">
-        <ShowData data={data} onClose={handleCloseCard} />
+        <ShowData />
       </section>
     </div>
   )
 }
 
-export default App
+export default App;

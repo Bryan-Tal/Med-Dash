@@ -1,0 +1,49 @@
+import pandas as pd
+
+
+vital_student_auth_key = "sk_us_0agd3WczBFZTKZ3VPZQ6XAlTvlgL59p5u7Ma8shK3N0"
+dalila_id = "108adcd9-fc8f-4c1d-9371-431e706334b9" #(Dalila's user ID)
+
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+client = Vital(
+  api_key=vital_student_auth_key,
+  environment=VitalEnvironment.SANDBOX
+)
+
+data = client.providers.get_all()
+
+## show ProviderDetailed
+functions = ['blood_oxygen', 'blood_pressure', 'caffeine', 'cholesterol', 'glucose', 'heartrate',
+             'hrv', 'hypnogram', 'igg', 'ige', 'mindfulness_minutes', 'respiratory_rate', 'water',
+             'calories_active', 'calories_basal', 'distance', 'floors_climbed', 'steps']
+a = 0
+data = {}
+for func in functions:
+    client = Vital(
+    api_key=vital_student_auth_key,
+    environment=VitalEnvironment.SANDBOX
+  )
+    method = getattr(client.vitals, func)
+    function_data = method(
+        user_id=dalila_id,
+        start_date="2023-11-10",
+        end_date = '2023-11-17'
+
+    )
+    if (len(function_data)!=0):
+      print(func)
+      print(type(function_data))
+      data[func]=function_data
+
+data
+
+
+## save data into seperate csv files
+for i in data:
+  final_data = pd.DataFrame()
+  for j in range(len(data[i])):
+    final_data = pd.concat([final_data, pd.DataFrame([vars(data[i][j])])], ignore_index=True)
+  filename = f'dataframe_{i}.csv'  # Unique filename for each DataFrame
+  final_data.to_csv(filename, index=False)
+  # print(final_data)
