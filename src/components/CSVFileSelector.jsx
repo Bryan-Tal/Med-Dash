@@ -7,7 +7,7 @@ const CSVFileSelector = () => {
   // Fetch and display the selected CSV file
   const fetchAndDisplayCSV = async (filename) => {
     try {
-      const response = await fetch(`/${filename}`); // Files in public are served at the root
+      const response = await fetch(`src/vital_csvs/${filename}`); // Files in public are served at the root
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }

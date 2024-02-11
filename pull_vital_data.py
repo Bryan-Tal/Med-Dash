@@ -44,6 +44,6 @@ for i in data:
   final_data = pd.DataFrame()
   for j in range(len(data[i])):
     final_data = pd.concat([final_data, pd.DataFrame([vars(data[i][j])])], ignore_index=True)
-  filename = f'dataframe_{i}.csv'  # Unique filename for each DataFrame
+  filename = f'src/vital_csvs/dataframe_{i}.csv'  # Unique filename for each DataFrame #change back to dataframe_{i}.csv
   final_data.to_csv(filename, index=False)
   # print(final_data)
