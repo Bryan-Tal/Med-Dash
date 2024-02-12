@@ -93,7 +93,7 @@ WORKDIR /react-med-dash
 RUN npm install
 
 # If you have a Python script to run before starting your service
-RUN python pull_vital_data.py
+#RUN python pull_vital_data.py
 
 # Make sure the CMD is executed in the correct directory and with correct syntax
 
