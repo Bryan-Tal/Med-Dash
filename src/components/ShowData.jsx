@@ -32,14 +32,14 @@ const ShowData = () => {
           key={id}
           extra={<CloseButton onClose={() => onCloseClick(id)} />}
         >
-          {list.map(({ title: innerTitle, desc: innerDesc, percent }, idx) => (
-            <div className="flex justify-between items-center mb-2" key={idx}>
-              <span>{innerTitle}</span>
-              <Tag className="px-4" color={color}>
-                {percent}
-              </Tag>
-            </div>
-          ))}
+          {list.map(({ title: innerTitle, desc: innerDesc }, idx) => (
+  <div className="flex justify-between items-center mb-2" key={idx}>
+    <span>{innerTitle}</span>
+    <Tag className="px-4" color={color}>
+      {innerDesc}
+    </Tag>
+  </div>
+))}
         </Card>
       ))}
     </div>
