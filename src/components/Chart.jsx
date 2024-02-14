@@ -128,7 +128,7 @@ const Chart = memo(({ dateRange }) => {
     }
   }
 
-  return <ReactECharts option={option} style={{ height: 500 }} />
+  return <ReactECharts option={option} style={{ height: 500}} />
 })
 
 export default Chart
