@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 //Create an editable today's entry page
-export default function Entries() {
+export default function HealthHabitEntries() {
   const [editingEntries, setEditingEntries] = useState(false);
   const [addingGoal, setAddingGoal] = useState(false);
   const [isRepeatable, setRepeatable] = useState(false);
@@ -81,4 +81,9 @@ function editGoal() {
       <p></p>
     </>
   );
+<<<<<<< HEAD
 }
+=======
+}
+
+>>>>>>> 75d76e1e60be4014e3e864c7f8d390b1d9e453f5

@@ -17,6 +17,27 @@ export const navBarData = [
     },
     {
       title: "FAQ",
-      url: "/faq"
+      url: '/faq',
     }
   ];
+
+  export const tabNames = [
+    {
+        title: 'Home',
+        url: '/',
+    },
+    {
+        title:"Health Analysis",
+         url: '/healthAnalysis',
+    },
+    {   title:"Diary Entries",
+        url: '/diary',
+    },
+    {
+        title:"Health Habit Tracker",
+        url: '/healthTracker'
+    },
+    {
+        title:"Clinician Communication",
+        url: '/clinicianComm',
+    }]

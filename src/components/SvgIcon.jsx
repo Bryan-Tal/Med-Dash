@@ -10,4 +10,4 @@ const SvgIcon = ({ iconName, size = 20, onClick }) => {
   )
 }
 
-export default SvgIcon
+export default SvgIcon;
