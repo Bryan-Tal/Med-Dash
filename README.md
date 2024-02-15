@@ -11,7 +11,7 @@ Once these files finish downloading, run `docker run --rm -it -p 8000:3000 react
 To access this page, open a web browser and type `localhost:8000`. You should be good to go!<br>
 
 ### Local Installation (*Development*)
-## NodeJS
+#### NodeJS
 Node JS is currently required to run the dashboard locally. <br> If NodeJS is not currently in your local system head to the following website `https://nodejs.org/en/download` and download the most current version of nodejs for your system.<br> 
 *NodeJS is needed to run required javascript files.*<br>
 
@@ -26,6 +26,8 @@ Now, to install all required JavaScript dependencies, type `npm install` <br>
 
 ##### Running the Dashboard
 Once everything is installed we can type `npm run dev` in order to run the dashboard website. Go to `localhost:3000` in a web browser to view. <br>
+
+**When pushing new changes, please remove your venv folder as it causes issues when others pull the repository** <br>
 
 #### Windows
 Creating a virtual environment and installing Python dependencies:<br>
@@ -44,4 +46,5 @@ Now, to install all required JavaScript dependencies, once in the correct direct
 
 ##### Running the Dashboard 
 Once everything is installed we can type `npm run dev` in the terminal in order to view the dashboard website. From here go to a web browser and type `localhost:8000` in the address bar. <br>
+**When pushing new changes, please remove your venv folder as it causes issues when others pull the repository** <br>
 
