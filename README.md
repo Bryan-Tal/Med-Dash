@@ -3,6 +3,7 @@ In order to properly run this code, you must copy this repository into a local m
 
  *** All code snippets are contained within single quotes, for instance: `example code` ***
 
+
 ### Docker (*Recommended*)
 Download Docker Desktop here: https://www.docker.com/products/docker-desktop/ <br>
 Once it is downloaded and docker is running, return to the terminal and type `docker build -t react-med-dash .` (<- Include the period). <br> This will create a Docker Image named "med-dash".<br>
@@ -43,3 +44,4 @@ Now, to install all required JavaScript dependencies, once in the correct direct
 
 ##### Running the Dashboard 
 Once everything is installed we can type `npm run dev` in the terminal in order to view the dashboard website. From here go to a web browser and type `localhost:8000` in the address bar. <br>
+

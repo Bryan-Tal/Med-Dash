@@ -38,8 +38,8 @@ const ShowData = () => {
     <Tag className="px-4" color={color}>
       {innerDesc}
     </Tag>
-            </div>
-          ))}
+  </div>
+))}
         </Card>
       ))}
     </div>
