@@ -5,7 +5,8 @@ export default function HealthHabitEntries() {
   const [editingEntries, setEditingEntries] = useState(false);
   const [addingGoal, setAddingGoal] = useState(false);
   const [isRepeatable, setRepeatable] = useState(false);
-  const [numberByDate, setNumberByDate] = useState(true);
+  const [numberByDate, setNumberByDate] = useState('');
+  const [date, setDate] = useState('')
   const [editingGoal, setEditingGoal] = useState(false);
   const [weight, setWeight] = useState('');
   const [water, setWater] = useState('');
@@ -15,7 +16,9 @@ export default function HealthHabitEntries() {
   //edit entries after clicking the corresponding button
   function editEntries(e) {
     setEditingEntries(true);
+    //setEditingEntries(e.editingEntries);
   }
+  
 
 //   function StopEditingEntries(e) {
 //     setEditingEntries(false);
@@ -29,8 +32,12 @@ function isRepeating(e) {
     setRepeatable(e.target.checked);
 }
 
-function isNumByDate(e) {
-    setNumberByDate(e.target.checked);
+function numByDate(e) {
+    setNumberByDate(e.target.value);
+}
+
+function byDate(e) {
+    setDate(e.target.value)
 }
 
 function editGoal() {
@@ -68,22 +75,19 @@ function editGoal() {
 
       <button onClick={editEntries}>Edit Today's Entries</button>
 
-      <button onClick={addGoal}>ADD GOAL</button>
+      <button onClick={addGoal}>Add Goal</button>
       <button onClick={editGoal}>Edit/Delete Goal</button>
       <p></p>
       {addingGoal && (<label>
       <input type="checkbox" checked={isRepeatable} onChange={isRepeating} />
       Goal is {isRepeatable ? 'Repeatable' : 'One Time'}
-      <input type="checkbox" checked={numberByDate} onChange={isNumByDate} />
-      Goal is {isRepeatable ? 'Repeatable' : 'One Time'}
+      <p></p>
+      Achieve <input value={numberByDate} onChange={numByDate} /> by 
+      <input value={date} onChange={byDate} />
+      <p></p>
       </label>
       )}
       <p></p>
     </>
   );
-<<<<<<< HEAD
 }
-=======
-}
-
->>>>>>> 75d76e1e60be4014e3e864c7f8d390b1d9e453f5
