@@ -7,7 +7,7 @@ import ClinicianCommunicationPage from './pages/ClinicianCommunicationPage';
 import HomePage from './pages/HomePage'
 import HealthAnalysis from './components/HealthAnalysis'
 import HealthHabit from './components/HealthHabit';
-
+import Home from './components/Home';
 
 
 
@@ -19,7 +19,7 @@ function App() {
           <div>
             <DropDownMenu />
             <Routes>
-              <Route exact path ="/" element={<HomePage/>} />
+              <Route exact path ="/" element={<Home/>} />
               {/* <Route path="/landing" element={<LandingPage />} /> */}
               <Route path="/healthAnalysis" element={<HealthAnalysis/>} />
               <Route path="/diary" element={<DiaryEntriesPage/>} />
