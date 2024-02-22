@@ -1,7 +1,19 @@
-import { useState } from 'react';
-
+import { useState, useEffect } from 'react';
 //Create an editable today's entry page
-export default function HealthHabit() {
+
+
+export default function MyApp() {
+  return (
+    <div>
+      <h1>Health Habits and Heart Rate Analysis</h1>
+      <HealthHabit />
+      <HeartRateAnalysis />
+    </div>
+  );
+}
+
+
+function HealthHabit() {
   const [editingEntries, setEditingEntries] = useState(false);
   const [addingGoal, setAddingGoal] = useState(false);
   const [isRepeatable, setRepeatable] = useState(false);
@@ -11,6 +23,10 @@ export default function HealthHabit() {
   const [weight, setWeight] = useState('');
   const [water, setWater] = useState('');
   const [sleep, setSleep] = useState('');
+
+
+
+
   //implement target number by date
 
   //edit entries after clicking the corresponding button
@@ -89,5 +105,54 @@ function editGoal() {
       )}
       <p></p>
     </>
+  );
+}
+
+function HeartRateAnalysis() {
+  // Define state for today's heart rate and weekly average heart rate
+  const [todayHeartRate, setTodayHeartRate] = useState(0);
+  const [weeklyAverageHeartRate, setWeeklyAverageHeartRate] = useState(0);
+  const [comparison, setComparison] = useState('');
+
+  // Simulated function to fetch today's heart rate (Replace with actual logic)
+  const fetchTodaysHeartRate = () => {
+    // Simulated logic to fetch today's heart rate from an API or database
+    // For demonstration purposes, generating a random heart rate between 60 and 100
+    return Math.floor(Math.random() * (100 - 60 + 1) + 60);
+  };
+
+  // Simulated function to fetch weekly average heart rate (Replace with actual logic)
+  const fetchWeeklyAverageHeartRate = () => {
+    // Simulated logic to fetch weekly average heart rate from an API or database
+    // For demonstration purposes, generating a random weekly average between 65 and 85
+    return Math.floor(Math.random() * (85 - 65 + 1) + 65);
+  };
+
+  useEffect(() => {
+    // Fetch today's heart rate and update state
+    const todayRate = fetchTodaysHeartRate();
+    setTodayHeartRate(todayRate);
+
+    // Fetch weekly average heart rate and update state
+    const weeklyAverageRate = fetchWeeklyAverageHeartRate();
+    setWeeklyAverageHeartRate(weeklyAverageRate);
+
+    // Compare today's heart rate with weekly average heart rate
+    if (todayRate > weeklyAverageRate) {
+      setComparison('HIGHER');
+    } else if (todayRate < weeklyAverageRate) {
+      setComparison('LOWER');
+    } else {
+      setComparison('EQUAL');
+    }
+  }, []);
+
+  return (
+    <div>
+      <h2>Heart Rate Analysis</h2>
+      <p>Today's Heart Rate: {todayHeartRate}</p>
+      <p>Weekly Average Heart Rate: {weeklyAverageHeartRate}</p>
+      <p>Today's heart rate was {comparison} than your typical heart rate average over the week.</p>
+    </div>
   );
 }
