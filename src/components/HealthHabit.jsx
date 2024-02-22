@@ -7,6 +7,7 @@ export default function HealthHabit() {
   const [isRepeatable, setRepeatable] = useState(false);
   const [numberByDate, setNumberByDate] = useState('');
   const [date, setDate] = useState('')
+  const [addNewGoal, setNewGoal] = useState('')
   const [editingGoal, setEditingGoal] = useState(false);
   const [weight, setWeight] = useState('');
   const [water, setWater] = useState('');
@@ -55,6 +56,10 @@ function editGoal() {
   function changeSleep(e) {
     setSleep(e.target.value);
   }
+
+  function addNewGoal(e) {
+    setNewGoal(e.target.value);
+  }
   //Stop editting feature not used rn: <div onClick={StopEditingEntries}></div>
 
   // Aesthetic <span style={{ color: habits.exercise[day] >= goal.exercise ? 'green' : 'red' }}>
@@ -85,6 +90,7 @@ function editGoal() {
       Achieve <input value={numberByDate} onChange={numByDate} /> by 
       <input value={date} onChange={byDate} />
       <p></p>
+      <button onClick={addNewGoal}>Add New Goal</button>
       </label>
       )}
       <p></p>
