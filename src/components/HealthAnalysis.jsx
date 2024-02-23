@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useEffect ,useState, useCallback } from 'react'
 import { getDays } from '~/utils/core'
 import { day } from '~/utils/day'
 import DateRangePicker from '~/components/DatePicker'
@@ -7,7 +7,9 @@ import ShowData from '~/components/ShowData'
 import '~/assets/HealthAnalysis.css'
 import { Button } from 'antd'
 import SvgIcon from '~/components/SvgIcon'
+import useFetchAndDisplayCSV from './useFetchAndDisplayCSV'
 
+const csvs = ['analysis_dataframe_cal.csv','analysis_dataframe_dist.csv','analysis_dataframe_heart.csv','analysis_dataframe_steps.csv']
 const HealthAnalysis = () => {
     const DISABLED_RANGE = 31
     const defaultDateRange = [day().subtract(DISABLED_RANGE, 'days'), day()]

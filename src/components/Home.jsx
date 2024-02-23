@@ -1,4 +1,4 @@
-
+import '/src/css/Home.css'
 import React from 'react';
 import { Image } from 'antd';
 import { Flex, Progress } from 'antd';
@@ -11,12 +11,14 @@ const WelcomeHeader = () => (
 
 
 const App = () => (
+
   <div className='right-align'>
     <Image
         width={500}
         src="https://med-dash.github.io/static/media/dashboard-growth.9e985101d7d337104387.png"
     />
   </div>
+
 
 );
 

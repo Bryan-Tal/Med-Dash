@@ -1,14 +1,15 @@
 import { memo, useState, useCallback } from 'react'
 import { Card, Tag } from 'antd'
 import SvgIcon from '~/components/SvgIcon'
-import useGenerateRandomData from './useGenerateRandomData'
+import useGenerateCardData from './useGenerateCardData'
+
 
 const CloseButton = ({ onClose }) => <SvgIcon iconName="close" onClick={onClose} />
 
 const ShowData = () => {
   // Generate random data for the cards 
    const [data, setData] = useState(
-    Array.from({ length: 4}, useGenerateRandomData())
+    Array.from({ length: 4}, useGenerateCardData())
   )
   // close the cards
   const handleCloseCard = useCallback(
