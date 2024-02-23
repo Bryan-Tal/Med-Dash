@@ -172,10 +172,6 @@ function HeartRateAnalysis() {
 
 
 
-
-
-import React, { useState } from 'react';
-
 function GoalTracker() {
   const [habits, setHabits] = useState([]);
   const [habitName, setHabitName] = useState('');
