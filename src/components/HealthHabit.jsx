@@ -362,5 +362,3 @@ function GoalTracker() {
     </div>
   );
 }
-
-export default GoalTracker;
