@@ -78,9 +78,9 @@ function editGoal() {
       <input value={sleep} onChange={changeSleep} disabled={!editingEntries} />
       <p></p>
 
-      <button onClick={editEntries}>Edit Today's Entries</button>
+      <button onClick={editEntries}>Edit Today's Entries </button>
 
-      <button onClick={addGoal}>Add Goal</button>
+      <button onClick={addGoal}>Add Goal </button>
       <button onClick={editGoal}>Edit/Delete Goal</button>
       <p></p>
       {addingGoal && (<label>
