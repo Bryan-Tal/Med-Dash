@@ -13,8 +13,8 @@ import Home from './components/Home';
 
 function App() {
   return (
-    <div className="mt-20 py-4 px-8">
-      <section className="flex justify-between items-center">
+  
+    <div className="app-background">
         <Router>
           <div>
             <DropDownMenu />
@@ -28,8 +28,6 @@ function App() {
             </Routes>
           </div>
         </Router>
-
-      </section>
     </div>
   )
 }
