@@ -1,5 +1,4 @@
-
-import { useState, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 //Create an editable today's entry page
 
 
@@ -10,6 +9,7 @@ export default function MyApp() {
       <HealthHabit />
       <HeartRateAnalysis />
 	<GoalTracker/>
+	<HabitTracker/>
     </div>
   );
 }
@@ -352,6 +352,260 @@ function GoalTracker() {
       </div>
 
       <button onClick={resetForm}>Add Another Goal</button>
+    </div>
+  );
+}
+
+
+
+
+
+
+function HabitTracker() {
+  const [habits, setHabits] = useState({
+    //filled with 7 since there are 7 days in a week
+    exercise: Array(7).fill(0),
+    waterIntake: Array(7).fill(0),
+    sleep: Array(7).fill(0)
+  });
+  const [goal, setGoal] = useState({
+    exercise: 0,
+    waterIntake: 0,
+    sleep: 0
+  });
+  const [summary, setSummary] = useState(null);
+  const [newHabit, setNewHabit] = useState('');
+  const [showGraph, setShowGraph] = useState(false);
+  const [selectedHabits, setSelectedHabits] = useState({
+    exercise: true,
+    waterIntake: true,
+    sleep: true
+  });
+
+  const canvasRef = useRef(null);
+
+  const toggleHabit = (habit, day) => {
+    setHabits(prevHabits => ({
+      ...prevHabits,
+      [habit]: prevHabits[habit].map((item, index) =>
+        index === day ? !item : item
+      )
+    }));
+  };
+
+  const calculateSuccessRate = (habit) => {
+    const successCount = habits[habit].filter(value => value >= goal[habit]).length;
+    return ((successCount / 7) * 100).toFixed(2);
+  };
+
+  const generateSummary = () => {
+    const exerciseSuccessRate = calculateSuccessRate('exercise');
+    const waterIntakeSuccessRate = calculateSuccessRate('waterIntake');
+    const sleepSuccessRate = calculateSuccessRate('sleep');
+
+    setSummary({
+      exerciseSuccessRate,
+      waterIntakeSuccessRate,
+      sleepSuccessRate
+    });
+  };
+
+  const handleAddNewHabit = (habit) => {
+    if (habit.trim() !== '') {
+      setHabits(prevHabits => ({
+        ...prevHabits,
+        [habit]: Array(7).fill(0)
+      }));
+      setGoal(prevGoal => ({
+        ...prevGoal,
+        [habit]: 0
+      }));
+      setNewHabit('');
+    }
+  };
+
+  useEffect(() => {
+    if (showGraph) {
+      drawChart();
+    }
+  },);
+
+  const drawChart = () => {
+    const canvas = canvasRef.current;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  const labels = [...Array(7)].map((_, day) => day + 1);
+
+  ctx.beginPath();
+  ctx.moveTo(50, 10);
+  ctx.lineTo(50, 350);
+  ctx.lineTo(500, 350);
+  ctx.strokeStyle = '#000';
+  ctx.stroke();
+
+  const habitColors = {
+    exercise: '#FF5733',
+    waterIntake: '#33FF57',
+    sleep: '#3357FF'
+  };
+
+  const habitNames = Object.keys(habits);
+
+  habitNames.forEach((habit, i) => {
+    if (selectedHabits[habit]) {
+      ctx.beginPath();
+      ctx.strokeStyle = habitColors[habit];
+      ctx.lineWidth = 2;
+      habits[habit].forEach((value, index) => {
+        const x = 50 + (index * 60);
+        const y = 350 - (value * 10);
+        if (index === 0) {
+          ctx.moveTo(x, y);
+        } else {
+          ctx.lineTo(x, y);
+        }
+        // Draw y-axis labels for each variable
+        ctx.fillText(value, x - 10, y - 5);
+      });
+      ctx.stroke();
+      ctx.fillText(habit, 510, 40 + i * 20);
+    }
+  });
+
+  labels.forEach((label, index) => {
+    ctx.fillText(label, 45 + (index * 60), 370);
+  });
+
+  habitNames.forEach((habit, i) => {
+    const y = 50 + i * 20;
+    ctx.fillStyle = habitColors[habit];
+    ctx.fillText(habit, 10, y);
+  });
+
+  ctx.save();
+  ctx.translate(30, 180);
+  ctx.rotate(-Math.PI / 2);
+  ctx.fillText("Value", 0, 0);
+  ctx.restore();
+  };
+
+  const handleCheckboxChange = (habit) => {
+    setSelectedHabits(prevState => ({
+      ...prevState,
+      [habit]: !prevState[habit]
+    }));
+  };
+
+  return (
+    <div>
+      <h1>Personalized Health Habit Tracker</h1>
+      <h2>Add New Habit</h2>
+      <div>
+        <input
+          type="text"
+          placeholder="Enter new habit..."
+          value={newHabit}
+          onChange={e => setNewHabit(e.target.value)}
+          onKeyDown={e => {
+            if (e.key === 'Enter') {
+              handleAddNewHabit(newHabit);
+            }
+          }}
+        />
+        <button onClick={() => handleAddNewHabit(newHabit)}>Add Habit</button>
+      </div>
+      <h2>Goals</h2>
+      <div>
+        {Object.keys(habits).map(habit => (
+          <div key={habit}>
+            <label>
+              {habit} Goal:
+              <input
+                type="number"
+                value={goal[habit] || 0}
+                onChange={e => setGoal({ ...goal, [habit]: parseInt(e.target.value, 10) })}
+              />
+            </label>
+          </div>
+        ))}
+      </div>
+      <h2>Habit Tracker</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            {Object.keys(habits).map(habit => (
+              <th key={habit}>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={selectedHabits[habit]}
+                    onChange={() => handleCheckboxChange(habit)}
+                  />
+                  {habit}
+                </label>
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {[...Array(7)].map((_, day) => (
+            <tr key={day}>
+              <td>{day + 1}</td>
+              {Object.keys(habits).map(habit => (
+                <td key={habit}>
+                  <input
+                    type="number"
+                    value={habits[habit] ? habits[habit][day] : ''}
+                    onChange={e => setHabits(prevHabits => ({
+                      ...prevHabits,
+                      [habit]: prevHabits[habit].map((value, index) =>
+                        index === day ? parseInt(e.target.value, 10) : value
+                      )
+                    }))}
+                  />
+                  <span style={{ color: habits[habit] && habits[habit][day] >= goal[habit] ? 'green' : 'red' }}>
+                    {habits[habit] ? habits[habit][day] : 0} / {goal[habit] || 0}
+                  </span>
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <button onClick={generateSummary}>Generate Summary</button>
+      <button onClick={() => setShowGraph(!showGraph)}>
+        {showGraph ? 'Hide Graph' : 'Show Graph'}
+      </button>
+      {showGraph && (
+        <div>
+          <h2>Graph</h2>
+          <canvas ref={canvasRef} width="550" height="400" style={{ border: '1px solid black' }}></canvas>
+          <div style={{ display: 'flex', flexDirection: 'column', marginLeft: '20px' }}>
+            {Object.keys(habits).map(habit => (
+              <label key={habit} style={{ marginBottom: '5px' }}>
+                <input
+                  type="checkbox"
+                  checked={selectedHabits[habit]}
+                  onChange={() => handleCheckboxChange(habit)}
+                />
+                {habit}
+              </label>
+            ))}
+          </div>
+        </div>
+      )}
+      {summary && (
+        <div>
+          <h2>Summary</h2>
+          {Object.keys(summary).map(habit => (
+            <p key={habit}>
+              {habit}: {summary[habit]}%
+            </p>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
