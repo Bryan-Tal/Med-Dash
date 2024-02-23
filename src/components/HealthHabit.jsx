@@ -169,3 +169,202 @@ function HeartRateAnalysis() {
     </div>
   );
 }
+
+
+
+
+
+import React, { useState } from 'react';
+
+function GoalTracker() {
+  const [habits, setHabits] = useState([]);
+  const [habitName, setHabitName] = useState('');
+  const [habitType, setHabitType] = useState('');
+  const [habitAmount, setHabitAmount] = useState('');
+  const [habitTimePeriod, setHabitTimePeriod] = useState('');
+  const [habitStartDate, setHabitStartDate] = useState('');
+  const [startValue, setStartValue] = useState('');
+  const [goalValue, setGoalValue] = useState('');
+
+  const handleHabitNameChange = (e) => {
+    setHabitName(e.target.value);
+  };
+
+  const handleHabitTypeChange = (e) => {
+    setHabitType(e.target.value);
+  };
+
+  const handleHabitAmountChange = (e) => {
+    setHabitAmount(e.target.value);
+  };
+
+  const handleHabitTimePeriodChange = (e) => {
+    setHabitTimePeriod(e.target.value);
+  };
+
+  const handleHabitStartDateChange = (e) => {
+    setHabitStartDate(e.target.value);
+  };
+
+  const handleStartValueChange = (e) => {
+    setStartValue(e.target.value);
+  };
+
+  const handleGoalValueChange = (e) => {
+    setGoalValue(e.target.value);
+  };
+
+  const handleHabitSubmit = (e) => {
+    e.preventDefault();
+    const newHabit = {
+      name: habitName,
+      type: habitType,
+      amount: habitAmount,
+      timePeriod: habitTimePeriod,
+      startDate: habitStartDate,
+      startValue: habitType === 'target' ? startValue : null,
+      goalValue: habitType === 'target' ? goalValue : null,
+    };
+    setHabits([...habits, newHabit]);
+    setHabitName('');
+    setHabitType('');
+    setHabitAmount('');
+    setHabitTimePeriod('');
+    setHabitStartDate('');
+    setStartValue('');
+    setGoalValue('');
+  };
+
+  const resetForm = () => {
+    setHabitName('');
+    setHabitType('');
+    setHabitAmount('');
+    setHabitTimePeriod('');
+    setHabitStartDate('');
+    setStartValue('');
+    setGoalValue('');
+  };
+
+  return (
+    <div>
+      <h1>Goal Tracker</h1>
+      <form onSubmit={handleHabitSubmit}>
+        <label>
+          Name Your Goal:
+          <input type="text" value={habitName} onChange={handleHabitNameChange} />
+        </label>
+        <label>
+          Select Goal Type:
+          <select value={habitType} onChange={handleHabitTypeChange}>
+            <option value="">Select</option>
+            <option value="habit">Habit: Repeating Action</option>
+            <option value="target">Target: Number by Date</option>
+            <option value="average">Average: Repeating Number</option>
+          </select>
+        </label>
+        {habitType === 'habit' && (
+          <>
+            <label>
+              How Many Times?:
+              <input type="number" value={habitAmount} onChange={handleHabitAmountChange} />
+            </label>
+            <label>
+              Time Period:
+              <select value={habitTimePeriod} onChange={handleHabitTimePeriodChange}>
+                <option value="">Select</option>
+                <option value="per day">Per Day</option>
+                <option value="per week">Per Week</option>
+                <option value="per month">Per Month</option>
+                <option value="per year">Per Year</option>
+              </select>
+            </label>
+            <label>
+              Start Date:
+              <input type="date" value={habitStartDate} onChange={handleHabitStartDateChange} />
+            </label>
+          </>
+        )}
+        {habitType === 'target' && (
+          <>
+            <label>
+              Start Value:
+              <input type="number" value={startValue} onChange={handleStartValueChange} />
+            </label>
+            <label>
+              Goal Value:
+              <input type="number" value={goalValue} onChange={handleGoalValueChange} />
+            </label>
+            <label>
+              Start Date:
+              <input type="date" value={habitStartDate} onChange={handleHabitStartDateChange} />
+            </label>
+          </>
+        )}
+        {habitType === 'average' && (
+          <>
+            <label>
+              Goal:
+              <input type="number" value={habitAmount} onChange={handleHabitAmountChange} />
+            </label>
+            <label>
+              <input type="radio" value="or more" name="averageType" />
+              Or More
+            </label>
+            <label>
+              <input type="radio" value="or less" name="averageType" />
+              Or Less
+            </label>
+            <label>
+              Time Period:
+              <select value={habitTimePeriod} onChange={handleHabitTimePeriodChange}>
+                <option value="">Select</option>
+                <option value="per day">Per Day</option>
+                <option value="per week">Per Week</option>
+                <option value="per month">Per Month</option>
+                <option value="per year">Per Year</option>
+              </select>
+            </label>
+            <label>
+              Start Date:
+              <input type="date" value={habitStartDate} onChange={handleHabitStartDateChange} />
+            </label>
+          </>
+        )}
+        <button type="submit">Set Goal</button>
+      </form>
+
+      <div>
+        <h2>Goals</h2>
+        <ul>
+          {habits.map((habit, index) => (
+            <li key={index}>
+              {habit.name} - {habit.type}
+              {habit.type === 'habit' && (
+                <>
+                  <p>Amount: {habit.amount}</p>
+                  <p>Time Period: {habit.timePeriod}</p>
+                </>
+              )}
+              {habit.type === 'target' && (
+                <>
+                  <p>Start Value: {habit.startValue}</p>
+                  <p>Goal Value: {habit.goalValue}</p>
+                </>
+              )}
+              {habit.type === 'average' && (
+                <>
+                  <p>Goal: {habit.amount}</p>
+                  <p>Time Period: {habit.timePeriod}</p>
+                </>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <button onClick={resetForm}>Add Another Goal</button>
+    </div>
+  );
+}
+
+export default GoalTracker;
