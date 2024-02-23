@@ -1,3 +1,4 @@
+import { number } from 'echarts';
 import { useState, useEffect } from 'react';
 //Create an editable today's entry page
 
@@ -73,8 +74,8 @@ function editGoal() {
     setSleep(e.target.value);
   }
 
-  function addNewGoal(e) {
-    setNewGoal(e.target.value);
+  function addingNewGoal(e) {
+    setNewGoal(true);
   }
   //Stop editting feature not used rn: <div onClick={StopEditingEntries}></div>
 
@@ -94,6 +95,13 @@ function editGoal() {
       <input value={sleep} onChange={changeSleep} disabled={!editingEntries} />
       <p></p>
 
+      {addNewGoal &&(<label>
+        Goal is {numberByDate} by {byDate}
+      </label>
+
+      )}
+      <p></p>
+
       <button onClick={editEntries}>Edit Today's Entries </button>
 
       <button onClick={addGoal}>Add Goal </button>
@@ -106,14 +114,13 @@ function editGoal() {
       Achieve <input value={numberByDate} onChange={numByDate} /> by 
       <input value={date} onChange={byDate} />
       <p></p>
-      <button onClick={addNewGoal}>Add New Goal</button>
+      <button onClick={addingNewGoal}>Add New Goal</button>
       </label>
       )}
       <p></p>
     </>
   );
 }
-
 function HeartRateAnalysis() {
   // Define state for today's heart rate and weekly average heart rate
   const [todayHeartRate, setTodayHeartRate] = useState(0);
