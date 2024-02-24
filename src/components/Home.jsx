@@ -14,16 +14,18 @@ const WelcomeHeader = () => (
 const MedDashImg = () => (
 
   <div className='container'>
-    <Image
-        width={500}
-        src="https://med-dash.github.io/static/media/dashboard-growth.9e985101d7d337104387.png" className='right-align'
-    />
+    
     <div className='button-container'>
       <Link to="/healthAnalysis"><Button className='linkbtn'>Health Analysis</Button></Link>
       <Link to="/diary"><Button className='linkbtn'>Diary</Button></Link>
       <Link to="/healthTracker"><Button className='linkbtn'>Health Habit Tracker</Button></Link>
       <Link to="/clinicianComm"><Button className='linkbtn'>Clinician Communication</Button></Link>
     </div>
+    <Image
+        width={500}
+        preview={false}
+        src="https://med-dash.github.io/static/media/dashboard-growth.9e985101d7d337104387.png" className='right-align'
+    />
   </div>
 
 

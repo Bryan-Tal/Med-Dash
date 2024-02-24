@@ -19,7 +19,7 @@
   .linkbtn{
     display: flex;
     padding: 50px;
-    margin-left:30em;
+    margin-left:1em;
     font-size: larger;
     align-items: center;
   }

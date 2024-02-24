@@ -1,8 +1,8 @@
 import pandas as pd
 
 
-vital_student_auth_key = ""
-dalila_id = ""
+vital_student_auth_key = "sk_us_0agd3WczBFZTKZ3VPZQ6XAlTvlgL59p5u7Ma8shK3N0"
+dalila_id = "108adcd9-fc8f-4c1d-9371-431e706334b9" #(Dalila's user ID)
 
 from vital.client import Vital
 from vital.environment import VitalEnvironment
