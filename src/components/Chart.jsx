@@ -11,7 +11,7 @@ const csvs = ['analysis_dataframe_cal.csv','analysis_dataframe_dist.csv','analys
 
 
 const Chart = memo(({ dateRange }) => {
-  let [yOptions, setyOptions] = useState([
+  let [yOptions, setYOptions] = useState([
     {
       name: 'data1',
       data: getRandomData(),
@@ -46,9 +46,8 @@ const Chart = memo(({ dateRange }) => {
           const dist_data = await useFetchAndDisplayCSV(csvs[1]);
           const heart_data = await useFetchAndDisplayCSV(csvs[2]);
           const steps_data = await useFetchAndDisplayCSV(csvs[3]);
-          
-          console.log(cal_data)
-          setyOptions([
+                 
+          setYOptions([
             {
               name: 'Calories Burned',
               data: cal_data.data,
@@ -84,28 +83,7 @@ const Chart = memo(({ dateRange }) => {
       }
 
       fetchData();
-    }, [yOptions]);
-    // change the data here to patient data
-
-  // the settings of graph
-  const calculateYAxisMax = () => {
-    const maxValues = yOptions.filter(dataSet => dataSet.visible)
-                               .flatMap(dataSet => dataSet.data);
-    return Math.max(...maxValues) * 1.1; // Apply a margin if desired
-  };
-
-  const yAxisMax = calculateYAxisMax();
-  console.log(yAxisMax)
-  const toggleDataSetVisibility = (name) => {
-    const updatedDataSets = yOptions.map(dataSet => {
-      if (dataSet.name === name) {
-        return { ...dataSet, visible: !dataSet.visible };
-      }
-      return dataSet;
-    });
-    setyOptions(updatedDataSets);
-  };
-  console.log(yOptions)
+    }, []);
 
   const option = {
     color: yOptions.map(({ color }) => color),
@@ -122,7 +100,8 @@ const Chart = memo(({ dateRange }) => {
     },
     legend: {
       x: 'center',
-      y: 'bottom'
+      y: 'bottom',
+      // selectedMode: false,
     },
     grid: {
       left: '0%',
@@ -168,22 +147,16 @@ const Chart = memo(({ dateRange }) => {
         selectorLabel: {
           show: true
         },
-        click: function (params, chart) {
-          toggleDataSetVisibility(params.name);
-          // Prevent the default action of legend click
-          chart.dispatchAction({
-            type: 'legendToggleSelect',
-            name: params.name
-          });
-        }
+
       },
       //set the max height greater than y-value
       min: 0,
-      max: yAxisMax//yOptions.map(({ data }) => Math.max(...data)).reduce((a, b) => Math.max(a, b)) + 150//yAxisMax
+      max: 'dataMax' //dynamically set y-axis height
     },
     series: [...yOptions.map(({ seriesOption }) => seriesOption)]
   }
 
+  
   // generate the random data for testing purposes
   function getRandomData(len = dateRange.length || 11) {
     const data = []
