@@ -13,7 +13,6 @@ import Home from './components/Home';
 
 function App() {
   return (
-  
     <div className="app-background">
         <Router>
           <div>
@@ -31,5 +30,4 @@ function App() {
     </div>
   )
 }
-
 export default App;

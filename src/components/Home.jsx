@@ -1,27 +1,36 @@
-
+import '/src/css/Home.css'
 import React from 'react';
 import { Image } from 'antd';
-import { Flex, Progress } from 'antd';
+import { Flex, Progress, Button } from 'antd';
 import '~/App.css'
 import { useState } from 'react';
+import { Link } from 'react-router-dom'
 
 const WelcomeHeader = () => (
   <h1 className="welcome-header">Welcome, Ben!</h1>
 );
 
 
-const App = () => (
-  <div className='right-align'>
+const MedDashImg = () => (
+
+  <div className='container'>
     <Image
         width={500}
-        src="https://med-dash.github.io/static/media/dashboard-growth.9e985101d7d337104387.png"
+        src="https://med-dash.github.io/static/media/dashboard-growth.9e985101d7d337104387.png" className='right-align'
     />
+    <div className='button-container'>
+      <Link to="/healthAnalysis"><Button className='linkbtn'>Health Analysis</Button></Link>
+      <Link to="/diary"><Button className='linkbtn'>Diary</Button></Link>
+      <Link to="/healthTracker"><Button className='linkbtn'>Health Habit Tracker</Button></Link>
+      <Link to="/clinicianComm"><Button className='linkbtn'>Clinician Communication</Button></Link>
+    </div>
   </div>
+
 
 );
 
 const x = 50;
-const App2 = () => (
+const ProgressCheck = () => (
 
   <div className = 'center-align'>
     <Flex gap="large" style={{ gap: '50px' }}>
@@ -70,13 +79,14 @@ const MoodSurvey = () => {
   );
 };
 
-const MainApp = () => (
+
+const Home = () => (
     <div>
       <WelcomeHeader/>
       <MoodSurvey/>
-      <App />
-      <App2 />
+      <MedDashImg />
+      <ProgressCheck />
     </div>
   );
   
-  export default MainApp;
+  export default Home;

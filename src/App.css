@@ -29,12 +29,3 @@ body {
   min-height: 100vh; 
 }
 
-.welcome-header {
-  text-align: left;
-  color: black;
-  font-weight: bold;
-  font-size: 60px;
-  margin-left: 50px;
-  margin-top: 50px;
-  font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-}
