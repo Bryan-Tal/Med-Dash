@@ -18,8 +18,11 @@
   }
   .linkbtn{
     display: flex;
-    padding: 50px;
+    padding: 70px;
+    width: calc(100% - 2em);
     margin-left:1em;
     font-size: larger;
     align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
   }
