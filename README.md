@@ -1,3 +1,6 @@
+## Navigating to the website
+You can access the [main page here](https://med-dash.netlify.app/). The site includes a login system for user profiles. If you'd like to see an example profile, feel free to contact me at bryantalavera.gomez@gmail.com. You can also check out the [poster](https://github.com/Bryan-Tal/react-med-dash/blob/main/med_dash_poster.pdf)!
+
 ## Downloading and Running This Code
 In order to properly run this code, you must copy this repository into a local machine, and then change to the dashboard website directory. <br>Once you've changed into the correct directory (It will be named something similar to "Data-Integrated-Patient-Dash.github.io/"). <br>
 
