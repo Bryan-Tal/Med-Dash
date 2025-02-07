@@ -1,0 +1,53 @@
+.ant-layout {
+    height: 100%;
+  }
+  
+  .header {
+    padding: 0;
+  }
+  
+  .logo-container {
+    display: flex;
+    align-items: center;
+  }
+
+  .logo-container img {
+    height: 60px;
+  }
+
+  .logo-container img:hover {
+    cursor: pointer;
+  }
+  
+  .layout-content {
+    background-color: whitesmoke;
+    color: black;
+    overflow-y: auto;
+  }
+  
+  .user-info {
+    padding-right: 20px;
+    color: #fff;
+    display: flex;
+    margin-left: auto;
+    justify-content: flex-end;
+    
+    .user-name {
+      color: black;
+      margin-right: 20px;
+    }
+    
+    .user-logout{
+      color: black;
+      display: inline-block;
+      cursor: pointer;
+      visibility:visible;
+      opacity:1;
+    }
+
+  }
+  .ant-layout-header {
+    height: max-content;
+    padding: 0 !important;
+    background-color: #fff;
+}

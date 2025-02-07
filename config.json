@@ -1,0 +1,14 @@
+{
+    "auth_key": "",
+    "user_id": "",
+    "functions": [
+        "blood_oxygen", "blood_pressure", "caffeine", "cholesterol", "glucose",
+        "heartrate", "hrv", "hypnogram", "igg", "ige", "mindfulness_minutes",
+        "respiratory_rate", "water", "calories_active", "calories_basal",
+        "distance", "floors_climbed", "steps"
+    ],
+    "start_date": "2024-02-20",
+    "end_date": "2024-04-29",
+    "directory": "./src/vital_csvs",
+    "uri":""
+}

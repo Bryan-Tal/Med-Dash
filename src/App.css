@@ -1,5 +1,4 @@
 #root {
-  max-width: 1440px;
   margin: 0 auto;
   text-align: center;
 }
@@ -10,7 +9,8 @@ body {
 
 .right-align {
   text-align: right;
-  margin-left: 35em;
+  margin-left: 30em;
+  padding: 2em;
 }
 
 .left-align {
@@ -29,3 +29,6 @@ body {
   min-height: 100vh; 
 }
 
+.home-page .site-layout-background {
+      display: none; /* Hide the layout bar only on the home page */
+  }

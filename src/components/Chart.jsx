@@ -1,14 +1,12 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import { memo, useMemo } from 'react'
-import * as echarts from 'echarts'
-import ReactECharts from 'echarts-for-react'
-import { formatDate} from '~/utils/core'
-import useFetchAndDisplayCSV from './useFetchAndDisplayCSV'
+import React, { useState, useEffect } from 'react';
+import { memo } from 'react';
+import * as echarts from 'echarts';
+import ReactECharts from 'echarts-for-react';
+import { formatDate } from '/src/utils/core.js';
+import fetchDataEndPoint from './FetchDataEndPoint';
 
-const csvs = ['analysis_dataframe_cal.csv','analysis_dataframe_dist.csv','analysis_dataframe_heart.csv','analysis_dataframe_steps.csv']
-
-
-
+const csvs = ['analysis_cal.csv', 'analysis_dist.csv', 'analysis_heart.csv', 'analysis_steps.csv'];
+const api_endpoints = ['calories', 'distance', 'heartrate', 'steps'];
 
 const Chart = memo(({ dateRange }) => {
   let [yOptions, setYOptions] = useState([
@@ -42,48 +40,52 @@ const Chart = memo(({ dateRange }) => {
   useEffect(() => {
       async function fetchData() {
         try {
-          const cal_data = await useFetchAndDisplayCSV(csvs[0]);
-          const dist_data = await useFetchAndDisplayCSV(csvs[1]);
-          const heart_data = await useFetchAndDisplayCSV(csvs[2]);
-          const steps_data = await useFetchAndDisplayCSV(csvs[3]);
-                 
-          setYOptions([
-            {
-              name: 'Calories Burned',
-              data: cal_data.data,
-              color: '#5ec9db'
-            },
-            {
-              name: 'Distance Traveled',
-              data: dist_data.data,
-              color: '#f5b97a'
-            },
-            {
-              name: 'Heart Rate',
-              data: heart_data.data,
-              color: '#f57a7a'
-              
-            },
-            {
-              name: 'Steps Taken',
-              data: steps_data.data, // Assuming useFetchAndDisplayCSV resolves to the structure { labels: [...], data: [...] }
-              color: '#d5d97a'
-            }
-          ].map(({ name, color, type = 'line', data }) => ({
-            name,
-            data,
-            color,
-            seriesOption: getSeriesOption({ name, from: color, data, type }),
-            visible: true
+          // const cal_data = await useFetchAndDisplayCSV(csvs[0]);
+          // const dist_data = await useFetchAndDisplayCSV(csvs[1]);
+          // const heart_data = await useFetchAndDisplayCSV(csvs[2]);
+          // const steps_data = await useFetchAndDisplayCSV(csvs[3]);
 
-          })));
-        } catch (error) {
-          console.error('Error fetching and parsing the CSV:', error);
-        }
+          const cal_data = await fetchDataEndPoint(api_endpoints[0]);
+          const dist_data = await fetchDataEndPoint(api_endpoints[1]);
+          const heart_data = await fetchDataEndPoint(api_endpoints[2]);
+          const steps_data = await fetchDataEndPoint(api_endpoints[3]);    
+          
+
+        setYOptions([
+          {
+            name: 'Calories Burned (kcal / 10)',
+            data: cal_data.data,
+            color: '#5ec9db'
+          },
+          {
+            name: 'Distance Traveled (km)',
+            data: dist_data.data,
+            color: '#f5b97a'
+          },
+          {
+            name: 'Heart Rate (bpm)',
+            data: heart_data.data,
+            color: '#f57a7a'
+          },
+          {
+            name: 'Steps Taken (thousands)',
+            data: steps_data.data,
+            color: '#d5d97a'
+          }
+        ].map(({ name, color, type = 'line', data }) => ({
+          name,
+          data,
+          color,
+          seriesOption: getSeriesOption({ name, from: color, data, type }),
+          visible: true
+        })));
+      } catch (error) {
+        console.error('Error fetching and parsing the CSV:', error);
       }
+    }
 
-      fetchData();
-    }, []);
+    fetchData();
+  }, []);
 
   const option = {
     color: yOptions.map(({ color }) => color),
@@ -101,7 +103,6 @@ const Chart = memo(({ dateRange }) => {
     legend: {
       x: 'center',
       y: 'bottom',
-      // selectedMode: false,
     },
     grid: {
       left: '0%',
@@ -140,24 +141,20 @@ const Chart = memo(({ dateRange }) => {
           width: 1
         }
       },
-      emphasis:{
+      emphasis: {
         focus: 'series'
       },
-      legend:{
+      legend: {
         selectorLabel: {
           show: true
         },
-
       },
-      //set the max height greater than y-value
       min: 0,
-      max: 'dataMax' //dynamically set y-axis height
+      max: 'dataMax'
     },
     series: [...yOptions.map(({ seriesOption }) => seriesOption)]
   }
 
-  
-  // generate the random data for testing purposes
   function getRandomData(len = dateRange.length || 11) {
     const data = []
     for (let i = 0; i < len; i++) {
@@ -166,20 +163,19 @@ const Chart = memo(({ dateRange }) => {
     return data
   }
 
-  // get the info of Y-axis
   function getSeriesOption(options) {
     return {
       name: options.name,
       type: options.type,
-      areaStyle: {
-        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-          { offset: 0, color: options.from },
-          { offset: 1, color: options.to || '#fff' }
-        ]),
-        lineStyle: {
-          width: 1
-        }
-      },
+      // areaStyle: {
+      //   color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+      //     { offset: 0, color: options.from },
+      //     { offset: 1, color: options.to || '#fff' }
+      //   ]),
+      //   lineStyle: {
+      //     width: 1
+      //   }
+      // },
       label: {
         show: false,
         position: 'top'
@@ -188,7 +184,96 @@ const Chart = memo(({ dateRange }) => {
     }
   }
 
-  return <ReactECharts option={option} style={{ height: 500}} />
-})
+  function HeartRateAnalysis() {
+    const [todayHeartRate, setTodayHeartRate] = useState(0);
+    const [weeklyAverageHeartRate, setWeeklyAverageHeartRate] = useState(0);
+    const [comparison, setComparison] = useState('');
 
-export default Chart
+    const fetchTodaysHeartRate = () => {
+      return Math.floor(Math.random() * (100 - 60 + 1) + 60);
+    };
+
+    const fetchWeeklyAverageHeartRate = () => {
+      return Math.floor(Math.random() * (85 - 65 + 1) + 65);
+    };
+
+    useEffect(() => {
+      const todayRate = fetchTodaysHeartRate();
+      setTodayHeartRate(todayRate);
+
+      const weeklyAverageRate = fetchWeeklyAverageHeartRate();
+      setWeeklyAverageHeartRate(weeklyAverageRate);
+
+      if (todayRate > weeklyAverageRate) {
+        setComparison('HIGHER');
+      } else if (todayRate < weeklyAverageRate) {
+        setComparison('LOWER');
+      } else {
+        setComparison('EQUAL');
+      }
+    }, []);
+
+    return (
+      <div className="heart-rate-analysis">
+        <h2 style={{ color: '#1e539e' }}>
+          <i className="fas fa-heart" style={{ marginRight: '8px', color: '#e74c3c' }}></i>
+          Heart Rate Analysis
+        </h2>
+        <p style={{ backgroundColor: '#f8f8f8' }}><strong>Today's Resting Heart Rate:</strong> {todayHeartRate}</p>
+        <p style={{ backgroundColor: '#f8f8f8' }}><strong>Weekly Average Resting Heart Rate:</strong> {weeklyAverageHeartRate}</p>
+        <p style={{ backgroundColor: '#f8f8f8' }}>
+          Today's resting heart rate was{' '}
+          <strong style={{ color: comparison === 'HIGHER' ? 'green' : comparison === 'LOWER' ? 'red' : 'black' }}>
+            {comparison}
+          </strong>{' '}
+          than your typical resting heart rate average over the week.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <ReactECharts option={option} style={{ height: 500 }} />
+        <HeartRateAnalysis />
+      </div>
+    </div>
+  );
+});
+
+export default Chart;
+
+// CSS for HeartRateAnalysis component
+const styles = `
+.heart-rate-analysis {
+  background-color: #f8f8f8;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.heart-rate-analysis h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.heart-rate-analysis p {
+  margin-bottom: 8px;
+}
+
+.heart-rate-analysis strong {
+  color: #333;
+}
+
+.fas.fa-heart {
+  color: #e74c3c;
+  margin-right: 8px;
+}
+`;
+
+const styleSheet = document.createElement("style");
+styleSheet.type = "text/css";
+styleSheet.innerText = styles;
+document.head.appendChild(styleSheet);
