@@ -1,7 +1,7 @@
 ## Navigating to the website
 You can access the [main page here](https://med-dash.netlify.app/). The site includes a login system for user profiles. If you'd like to see an example profile, feel free to contact me at bryantalavera.gomez@gmail.com. You can also check out the [poster](https://github.com/Bryan-Tal/react-med-dash/blob/main/med_dash_poster.pdf)!
 
-## Downloading and Running This Code
+## Downloading and Running This Code (*For Development*)
 In order to properly run this code, you must copy this repository into a local machine, and then change to the dashboard website directory. <br>Once you've changed into the correct directory (It will be named something similar to "Data-Integrated-Patient-Dash.github.io/"). <br>
 
  *** All code snippets are contained within single quotes, for instance: `example code` ***
@@ -13,7 +13,7 @@ Once it is downloaded and docker is running, return to the terminal and type `do
 Once these files finish downloading, run `docker run --rm -it -p 8000:3000 react-med-dash`.<br> This code runs the med-dash image on port 8000. <br>
 To access this page, open a web browser and type `localhost:8000`. You should be good to go!<br>
 
-### Local Installation (*Development*)
+### Local Installation 
 #### NodeJS
 Node JS is currently required to run the dashboard locally. <br> If NodeJS is not currently in your local system head to the following website `https://nodejs.org/en/download` and download the most current version of nodejs for your system.<br> 
 *NodeJS is needed to run required javascript files.*<br>
